@@ -134,7 +134,7 @@ const useZipToUsfmData = (
       }
     };
     processFile();
-  }, [state]);
+  }, [state.file, state.isLoading]);
 
   // Now we need to read usfm data.
 

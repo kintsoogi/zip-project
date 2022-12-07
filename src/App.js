@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import localforage from "localforage";
 
 import "./App.css";
