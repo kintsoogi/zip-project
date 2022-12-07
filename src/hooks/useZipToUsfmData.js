@@ -127,10 +127,6 @@ const useZipToUsfmData = (
             dispatch({ type: "upload-error", error });
           }
         }
-
-        // TODO: we can check if file contains usfm files
-        // TODO: we can also do the validation of the files
-        // TODO: on success, we will use given
       }
     };
     processFile();

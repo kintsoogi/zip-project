@@ -1,27 +1,22 @@
-import React from "react";
-import localforage from "localforage";
+import React, { useState } from "react";
 
-import "./App.css";
 import ZipFileInput from "./components/ZipFileInput";
 import useZipToUsfmData from "./hooks/useZipToUsfmData";
+import useLocalForage from "./hooks/useLocalForage";
 
 const App = () => {
-  const zipStore = localforage.createInstance({
-    driver: [localforage.INDEXEDDB],
-    name: "zip-store",
-  });
+  const [projectName, setProjectName] = useState("");
+  const { store, getFromStore, setInStore } = useLocalForage("zip-store");
 
-  const getZipFromIdbStore = async (filename) => {
-    try {
-      return await zipStore.getItem(filename);
-    } catch (error) {
-      console.log("Error while retrieving zip file from IndexedDB...", error);
-    }
-  };
+  // On app load, check zip store for any existing projects...
+  // getAllFromStore
+
+  // If any projects exist and user wants to open, get info from store
+  // getFromStore(project)
 
   const handleZipLoad = async (file) => {
     const arrayBuffer = await file.arrayBuffer();
-    await zipStore.setItem(file.name, arrayBuffer); // For now instead of project name, we will just use file name to store the file.
+    await setInStore(projectName, arrayBuffer);
   };
 
   const {
@@ -68,8 +63,18 @@ const App = () => {
   return (
     <div className="App">
       <h1>This is my file input</h1>
-      <ZipFileInput onChange={onChange} />
-      <button onClick={onSubmit}></button>
+      <form onSubmit={onSubmit}>
+        <input
+          placeholder="Project Name"
+          name="projectName"
+          value={projectName}
+          onChange={(e) => {
+            setProjectName(e.target.value);
+          }}
+        />
+        <ZipFileInput onChange={onChange} />
+        <button>Submit</button>
+      </form>
     </div>
   );
 };
