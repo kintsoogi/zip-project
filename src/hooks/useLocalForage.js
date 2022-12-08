@@ -3,6 +3,7 @@ import localforage from "localforage";
 
 const useLocalForage = (storeName) => {
   const [store, setStore] = useState(null);
+  const [storeData, setStoreData] = useState([]);
 
   useEffect(() => {
     setStore(
@@ -13,8 +14,19 @@ const useLocalForage = (storeName) => {
     );
   }, []);
 
+  useEffect(() => {
+    if (store) getAllFromStore();
+  }, [store]);
+
   const isStoreEmpty = async () => {
-    if (!store) return true;
+    if (!store) {
+      await setStore(
+        localforage.createInstance({
+          driver: [localforage.INDEXEDDB],
+          name: storeName,
+        })
+      );
+    }
     try {
       const storeLength = await store.length();
       if (storeLength) return false;
@@ -27,8 +39,8 @@ const useLocalForage = (storeName) => {
     }
   };
 
-  const getAllFromStore = async (store) => {
-    const isEmpty = await isStoreEmpty(store);
+  const getAllFromStore = async () => {
+    const isEmpty = await isStoreEmpty();
     if (isEmpty) return [];
 
     let result = [];
@@ -37,8 +49,9 @@ const useLocalForage = (storeName) => {
       result = [...result, { key, data: value }];
     };
 
-    const successCallback = () => result;
-
+    const successCallback = () => {
+      setStoreData(result);
+    };
     await store.iterate(iteratorCallback, successCallback);
   };
 
@@ -60,8 +73,8 @@ const useLocalForage = (storeName) => {
 
   return {
     store,
+    storeData,
     isStoreEmpty,
-    getAllFromStore,
     getFromStore,
     setInStore,
   };
