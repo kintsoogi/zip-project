@@ -13,6 +13,35 @@ const useLocalForage = (storeName) => {
     );
   }, []);
 
+  const isStoreEmpty = async () => {
+    if (!store) return true;
+    try {
+      const storeLength = await store.length();
+      if (storeLength) return false;
+      return true;
+    } catch (error) {
+      console.log(
+        "Error while checking if localforage store was empty: ",
+        error
+      );
+    }
+  };
+
+  const getAllFromStore = async (store) => {
+    const isEmpty = await isStoreEmpty(store);
+    if (isEmpty) return [];
+
+    let result = [];
+    const iteratorCallback = (value, key, iterationNumber) => {
+      console.log({ key, value });
+      result = [...result, { key, data: value }];
+    };
+
+    const successCallback = () => result;
+
+    await store.iterate(iteratorCallback, successCallback);
+  };
+
   const getFromStore = async (key) => {
     try {
       return await store.getItem(key);
@@ -31,6 +60,8 @@ const useLocalForage = (storeName) => {
 
   return {
     store,
+    isStoreEmpty,
+    getAllFromStore,
     getFromStore,
     setInStore,
   };
