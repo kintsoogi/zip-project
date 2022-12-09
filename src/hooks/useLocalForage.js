@@ -7,7 +7,6 @@ const useLocalForage = (storeName) => {
   useEffect(() => {
     setStore(
       localforage.createInstance({
-        driver: [localforage.INDEXEDDB],
         name: storeName,
       })
     );
