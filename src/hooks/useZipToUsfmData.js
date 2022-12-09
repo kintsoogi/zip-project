@@ -83,7 +83,7 @@ const useZipToUsfmData = (
       if (state.file && state.isLoading) {
         // TODO: We can check if file is valid zip file
         try {
-          if (state.file.type === "application/zip") {
+          if (state.file.type.includes("zip")) {
             const arrayBuffer = await state.file.arrayBuffer();
             const usfmArray = await arrayBufferToUsfmArray(arrayBuffer);
 
