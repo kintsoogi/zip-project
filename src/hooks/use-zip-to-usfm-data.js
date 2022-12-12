@@ -81,7 +81,6 @@ const useZipToUsfmData = (
   useEffect(() => {
     const processFile = async () => {
       if (state.file && state.isLoading) {
-        // TODO: We can check if file is valid zip file
         try {
           if (state.file.type === "application/zip") {
             const arrayBuffer = await state.file.arrayBuffer();

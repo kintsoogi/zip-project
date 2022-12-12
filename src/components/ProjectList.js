@@ -13,7 +13,15 @@ const ProjectList = () => {
   return (
     <div>
       <h2>Project List</h2>
-      {renderedProjectItems}
+      <table>
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Books</th>
+          </tr>
+        </thead>
+        <tbody>{renderedProjectItems}</tbody>
+      </table>
     </div>
   );
 };
