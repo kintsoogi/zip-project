@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 
-import useLocalForage from "../hooks/useLocalForage";
+import ProjectsContext from "../contexts/projects";
 
 const ProjectList = () => {
-  const [projectData, setProjectData] = useState([]);
-  const { storeData } = useLocalForage("zip-store");
-
-  console.log(storeData);
+  const { projects } = useContext(ProjectsContext);
+  console.log(projects);
 
   return <div>ProjectList</div>;
 };

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import ZipFileInput from "./ZipFileInput";
-import useZipToUsfmData from "../hooks/useZipToUsfmData";
-import useLocalForage from "../hooks/useLocalForage";
+import useZipToUsfmData from "../hooks/use-zip-to-usfm-data";
+import useProjectsContext from "../hooks/use-projects-context";
 
 const OpenZipProject = () => {
   const [projectName, setProjectName] = useState("");
-  const { setInStore } = useLocalForage("zip-store");
+  const { addProject } = useProjectsContext();
 
   const handleZipLoad = async (file) => {
     const arrayBuffer = await file.arrayBuffer();
-    await setInStore(projectName, arrayBuffer);
+    await addProject(projectName, arrayBuffer);
   };
 
   const {
@@ -46,7 +46,6 @@ const OpenZipProject = () => {
   }
 
   if (status === "UPLOAD_SUCCESS") {
-    console.log(usfmData);
     return (
       <div>
         <p>wohoo it worked!</p>
