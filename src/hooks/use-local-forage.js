@@ -19,7 +19,7 @@ const useLocalForage = () => {
 
     const iteratorCallback = (value, key, iterationNumber) => {
       // console.log({ key, value });
-      result = [...result, { key, data: value }];
+      result = [...result, { name: key, data: value }];
     };
 
     try {

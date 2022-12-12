@@ -58,6 +58,7 @@ const OpenZipProject = () => {
       <h1>This is my file input</h1>
       <form onSubmit={onSubmit}>
         <input
+          data-cy="zip-text-input"
           placeholder="Project Name"
           name="projectName"
           value={projectName}
