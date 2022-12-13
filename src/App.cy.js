@@ -17,16 +17,12 @@ describe("<ProjectList>", () => {
     // Add two projects
     cy.mount(<OpenZipProject />);
     cy.get("[data-cy=zip-text-input]").type("proj1");
-    cy.get("[data-cy=zip-file-input]").selectFile(
-      "cypress/fixtures/Mat_Tit.zip"
-    );
+    cy.get("[data-cy=zip-file-input]").selectFile("cypress/fixtures/jonh.zip");
     cy.get("button").click();
 
     cy.mount(<OpenZipProject />);
     cy.get("[data-cy=zip-text-input]").type("proj2");
-    cy.get("[data-cy=zip-file-input]").selectFile(
-      "cypress/fixtures/Mat_Tit.zip"
-    );
+    cy.get("[data-cy=zip-file-input]").selectFile("cypress/fixtures/john.zip");
     cy.get("button").click();
 
     cy.wait(1000);

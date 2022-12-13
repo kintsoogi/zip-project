@@ -41,9 +41,7 @@ describe("<OpenZipProject>", () => {
 
   it("finishes properly if the user enters a valid zip file containing usfm files", () => {
     cy.mount(<OpenZipProject />);
-    cy.get("[data-cy=zip-file-input]").selectFile(
-      "cypress/fixtures/Mat_Tit.zip"
-    );
+    cy.get("[data-cy=zip-file-input]").selectFile("cypress/fixtures/john.zip");
     cy.get("button").click();
     cy.get("p").should("contains.text", "wohoo it worked!");
   });
