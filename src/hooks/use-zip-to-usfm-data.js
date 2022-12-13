@@ -1,8 +1,8 @@
 import { useEffect, useReducer } from "react";
 
 import {
-  arrayBufferToUsfmArray,
-  validateUsfmArray,
+  arrayBufferToUsfmData,
+  validateUsfmData,
 } from "../utils/zipUsfmHelpers";
 
 // Constants
@@ -84,9 +84,9 @@ const useZipToUsfmData = (
         try {
           if (state.file.type.includes("zip")) {
             const arrayBuffer = await state.file.arrayBuffer();
-            const usfmArray = await arrayBufferToUsfmArray(arrayBuffer);
+            const usfmData = await arrayBufferToUsfmData(arrayBuffer);
 
-            if (!usfmArray.length) {
+            if (!usfmData.length) {
               dispatch({
                 type: "invalid-file",
                 fileType: "Zip file with no usfm files was uploaded!",
@@ -95,8 +95,8 @@ const useZipToUsfmData = (
             }
 
             if (shouldValidate) {
-              const usfmValidatedArray = validateUsfmArray(usfmArray);
-              if (!usfmValidatedArray.length) {
+              const usfmValidatedData = validateUsfmData(usfmData);
+              if (!usfmValidatedData.length) {
                 dispatch({
                   type: "invalid-file",
                   fileType: "All USFM files within the zip were invalid!",
@@ -105,12 +105,12 @@ const useZipToUsfmData = (
               }
               dispatch({
                 type: "file-uploaded",
-                usfmData: usfmValidatedArray,
+                usfmData: usfmValidatedData,
               });
             } else {
               dispatch({
                 type: "file-uploaded",
-                usfmData: usfmArray,
+                usfmData: usfmData,
               });
             }
             handleZipLoad(state.file);

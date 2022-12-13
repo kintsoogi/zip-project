@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 
 import {
-  arrayBufferToUsfmArray,
+  arrayBufferToUsfmData,
   // usfmArrayToArrayBuffer,
 } from "../utils/zipUsfmHelpers";
 import useLocalForage from "../hooks/use-local-forage";
@@ -17,8 +17,18 @@ const ProjectsProvider = ({ children }) => {
   };
 
   const fetchProjects = async () => {
-    const response = await getAllFromStore();
-    setProjects(response);
+    const storeData = await getAllFromStore();
+    const projectPromises = storeData.map(async (data) => {
+      return {
+        id: data.id,
+        name: data.key,
+        data: await arrayBufferToUsfmData(data.value),
+        // TODO: (maybe) detect language in data and store
+        // language: detectLanguage(data.value)
+      };
+    });
+    const _projects = await Promise.all(projectPromises);
+    setProjects(_projects);
   };
 
   const getProject = (projectName) => {
@@ -35,8 +45,9 @@ const ProjectsProvider = ({ children }) => {
     }
 
     const newProject = {
+      id: projects.length,
       name: projectName,
-      data: await arrayBufferToUsfmArray(usfmArrayBuffer),
+      data: await arrayBufferToUsfmData(usfmArrayBuffer),
     };
 
     await setInStore(projectName, usfmArrayBuffer);

@@ -17,7 +17,7 @@ describe("<ProjectList>", () => {
     // Add two projects
     cy.mount(<OpenZipProject />);
     cy.get("[data-cy=zip-text-input]").type("proj1");
-    cy.get("[data-cy=zip-file-input]").selectFile("cypress/fixtures/jonh.zip");
+    cy.get("[data-cy=zip-file-input]").selectFile("cypress/fixtures/john.zip");
     cy.get("button").click();
 
     cy.mount(<OpenZipProject />);
@@ -25,7 +25,7 @@ describe("<ProjectList>", () => {
     cy.get("[data-cy=zip-file-input]").selectFile("cypress/fixtures/john.zip");
     cy.get("button").click();
 
-    cy.wait(1000);
+    cy.wait(500);
     cy.mount(<App />);
     cy.get("[data-cy=project-item]").should("have.length", 2);
   });

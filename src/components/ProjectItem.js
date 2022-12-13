@@ -1,8 +1,7 @@
 import React from "react";
 
 const ProjectItem = ({ project }) => {
-  // TODO: Why are we being rendered EIGHT TIMES???
-  console.log(project.data);
+  console.log(project);
 
   return (
     <tr data-cy="project-item">
