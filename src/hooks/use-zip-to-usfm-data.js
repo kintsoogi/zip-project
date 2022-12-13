@@ -82,7 +82,7 @@ const useZipToUsfmData = (
     const processFile = async () => {
       if (state.file && state.isLoading) {
         try {
-          if (state.file.type === "application/zip") {
+          if (state.file.type.includes("zip")) {
             const arrayBuffer = await state.file.arrayBuffer();
             const usfmArray = await arrayBufferToUsfmArray(arrayBuffer);
 

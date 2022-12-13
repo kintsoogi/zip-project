@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 
 import {
   arrayBufferToUsfmArray,
-  usfmArrayToArrayBuffer,
+  // usfmArrayToArrayBuffer,
 } from "../utils/zipUsfmHelpers";
 import useLocalForage from "../hooks/use-local-forage";
 
@@ -55,7 +55,8 @@ const ProjectsProvider = ({ children }) => {
         return { ...project, data: usfmData };
       }
     });
-    const usfmArrayBuffer = usfmArrayToArrayBuffer(usfmData);
+    const usfmArrayBuffer = [];
+    // const usfmArrayBuffer = usfmArrayToArrayBuffer(usfmData);
 
     await setInStore(projectName, usfmArrayBuffer);
     setProjects(updatedProjects);

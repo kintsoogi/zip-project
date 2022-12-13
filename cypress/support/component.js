@@ -21,7 +21,7 @@ import "./commands";
 
 import { mount } from "cypress/react18";
 
-import { ProjectsProvider } from "../../src/contexts/projects";
+import { ProjectsProvider } from "../../src/context/projects";
 
 Cypress.Commands.add("mount", (component, options) => {
   // Wrap any parent components needed
