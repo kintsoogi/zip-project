@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 
 import ZipFileInput from "./ZipFileInput";
-import useZipToUsfmData from "../hooks/use-zip-to-usfm-data";
-import useProjectsContext from "../hooks/use-projects-context";
+import useZipToUsfmData from "../../hooks/use-zip-to-usfm-data";
+import useProjectsContext from "../../hooks/use-projects-context";
 
-const OpenZipProject = () => {
+const CreateZipProject = () => {
   const [projectName, setProjectName] = useState("");
   const { addProject } = useProjectsContext();
 
@@ -73,4 +73,4 @@ const OpenZipProject = () => {
   );
 };
 
-export default OpenZipProject;
+export default CreateZipProject;

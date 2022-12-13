@@ -1,6 +1,6 @@
 import React from "react";
 
-import useProjectsContext from "../hooks/use-projects-context";
+import useProjectsContext from "../../hooks/use-projects-context";
 
 const ProjectItem = ({ project }) => {
   const { selectProject } = useProjectsContext();

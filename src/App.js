@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
-import OpenZipProject from "./components/OpenZipProject";
-import ProjectList from "./components/ProjectList";
+import CreateZipProject from "./components/CreateZipProject/CreateZipProject";
+import ProjectList from "./components/ProjectList/ProjectList";
 import useProjectsContext from "./hooks/use-projects-context";
 
 const App = () => {
@@ -13,7 +13,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <OpenZipProject />
+      <CreateZipProject />
       <ProjectList />
     </div>
   );
