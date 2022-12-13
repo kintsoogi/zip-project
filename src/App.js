@@ -7,13 +7,17 @@ import useProjectsContext from "./hooks/use-projects-context";
 const App = () => {
   const { fetchProjects } = useProjectsContext();
 
+  const handleCreateZip = (usfmData) => {
+    console.log(usfmData);
+  };
+
   useEffect(() => {
     fetchProjects();
   }, []);
 
   return (
     <div className="App">
-      <CreateZipProject />
+      <CreateZipProject onCreate={handleCreateZip} />
       <ProjectList />
     </div>
   );

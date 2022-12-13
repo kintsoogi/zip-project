@@ -4,13 +4,14 @@ import ZipFileInput from "./ZipFileInput";
 import useZipToUsfmData from "../../hooks/use-zip-to-usfm-data";
 import useProjectsContext from "../../hooks/use-projects-context";
 
-const CreateZipProject = () => {
+const CreateZipProject = ({ onCreate }) => {
   const [projectName, setProjectName] = useState("");
   const { addProject } = useProjectsContext();
 
-  const handleZipLoad = async (file) => {
+  const handleZipLoad = async (usfmData, file) => {
     const arrayBuffer = await file.arrayBuffer();
     await addProject(projectName, arrayBuffer);
+    onCreate(usfmData);
   };
 
   const {

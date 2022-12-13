@@ -18,7 +18,7 @@ const initialState = {
   status: "idle",
   file: null,
   isLoading: false,
-  usfmData: [],
+  usfmData: null,
   invalidFileType: "",
   uploadError: null,
 };
@@ -56,7 +56,10 @@ const reducer = (state, action) => {
 };
 
 const useZipToUsfmData = (
-  handleZipLoad = (file) => console.log(file),
+  handleZipLoad = (usfmData, file) => {
+    console.log(file);
+    console.log(usfmData);
+  },
   shouldValidate = true
 ) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -113,7 +116,6 @@ const useZipToUsfmData = (
                 usfmData: usfmData,
               });
             }
-            handleZipLoad(state.file);
           } else {
             dispatch({
               type: "invalid-file",
@@ -131,7 +133,10 @@ const useZipToUsfmData = (
     processFile();
   }, [state.file, state.isLoading]);
 
-  // Now we need to read usfm data.
+  // Run callback function when usfm data is successfully uploaded
+  useEffect(() => {
+    if (state.usfmData) handleZipLoad(state.usfmData, state.file);
+  }, [state.usfmData]);
 
   return {
     ...state,
