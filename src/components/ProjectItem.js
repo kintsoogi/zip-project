@@ -1,10 +1,16 @@
 import React from "react";
 
+import useProjectsContext from "../hooks/use-projects-context";
+
 const ProjectItem = ({ project }) => {
-  console.log(project);
+  const { selectProject } = useProjectsContext();
 
   return (
-    <tr data-cy="project-item">
+    <tr
+      data-cy="project-item"
+      onClick={() => selectProject(project)}
+      style={{ cursor: "pointer" }}
+    >
       <td>{project.name}</td>
       <td>{project.data.length}</td>
     </tr>

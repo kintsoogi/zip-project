@@ -10,6 +10,7 @@ const ProjectsContext = createContext();
 
 const ProjectsProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
+  const [selectedProject, setSelectedProject] = useState(null);
   const { getAllFromStore, setInStore, deleteFromStore } = useLocalForage();
 
   const projectExists = (projectName) => {
@@ -85,13 +86,20 @@ const ProjectsProvider = ({ children }) => {
     return true;
   };
 
+  const selectProject = (project) => {
+    console.log(project);
+    setSelectedProject({ ...project });
+  };
+
   const context = {
     projects,
+    selectedProject,
     fetchProjects,
     getProject,
     addProject,
     updateProject,
     deleteProject,
+    selectProject,
   };
 
   return (
