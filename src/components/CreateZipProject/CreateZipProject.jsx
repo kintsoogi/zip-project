@@ -4,7 +4,7 @@ import ZipFileInput from "./ZipFileInput";
 import useZipToUsfmData from "../../hooks/use-zip-to-usfm-data";
 import useProjectsContext from "../../hooks/use-projects-context";
 
-const CreateZipProject = ({ onCreate }) => {
+const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
   const [projectName, setProjectName] = useState("");
   const { addProject } = useProjectsContext();
 
@@ -16,14 +16,12 @@ const CreateZipProject = ({ onCreate }) => {
 
   const {
     status,
-    file,
     isLoading,
-    usfmData,
     invalidFileType,
     uploadError,
     onChange,
     onSubmit,
-  } = useZipToUsfmData(handleZipLoad);
+  } = useZipToUsfmData(handleZipLoad, shouldValidate);
 
   if (isLoading) {
     return <div>Loading....</div>;
@@ -56,7 +54,7 @@ const CreateZipProject = ({ onCreate }) => {
 
   return (
     <div className="open-zip-project">
-      <h1>This is my file input</h1>
+      <h1>Input zipped USFM files...</h1>
       <form onSubmit={onSubmit}>
         <input
           data-cy="zip-text-input"

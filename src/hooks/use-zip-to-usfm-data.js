@@ -60,7 +60,7 @@ const useZipToUsfmData = (
     console.log(file);
     console.log(usfmData);
   },
-  shouldValidate = true
+  shouldValidate
 ) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
