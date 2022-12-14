@@ -4,8 +4,8 @@ import "./index.css";
 
 import App from "./App";
 import { ProjectsProvider } from "./context/projects";
-import { CreateZipProject } from "./components/CreateZipProject/CreateZipProject";
-import { ProjectList } from "./components/ProjectList/ProjectList";
+import  CreateZipProject  from "./components/CreateZipProject/CreateZipProject";
+import  ProjectList  from "./components/ProjectList/ProjectList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
