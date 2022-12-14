@@ -1,12 +1,12 @@
-import OpenZipProject from "./OpenZipProject";
+import CreateZipProject from "./CreateZipProject";
 
-describe("<OpenZipProject>", () => {
+describe("<CreateZipProject>", () => {
   it("mounts", () => {
-    cy.mount(<OpenZipProject />);
+    cy.mount(<CreateZipProject />);
   });
 
   it("responds with an error when a user enters a file other than zip", () => {
-    cy.mount(<OpenZipProject />);
+    cy.mount(<CreateZipProject />);
     cy.get("[data-cy=zip-file-input]").selectFile(
       "cypress/fixtures/example.json"
     );
@@ -18,7 +18,7 @@ describe("<OpenZipProject>", () => {
   });
 
   it("responds with an error when a user enters a zip file without usfm files", () => {
-    cy.mount(<OpenZipProject />);
+    cy.mount(<CreateZipProject />);
     cy.get("[data-cy=zip-file-input]").selectFile("cypress/fixtures/lorem.zip");
     cy.get("button").click();
     cy.get("p").should(
@@ -28,7 +28,7 @@ describe("<OpenZipProject>", () => {
   });
 
   it("responds with an error when a user inputs a zip file with INVALID usfm files when validation is turned on", () => {
-    cy.mount(<OpenZipProject />);
+    cy.mount(<CreateZipProject />);
     cy.get("[data-cy=zip-file-input]").selectFile(
       "cypress/fixtures/invalid_usfm.zip"
     );
@@ -40,10 +40,8 @@ describe("<OpenZipProject>", () => {
   });
 
   it("finishes properly if the user enters a valid zip file containing usfm files", () => {
-    cy.mount(<OpenZipProject />);
-    cy.get("[data-cy=zip-file-input]").selectFile(
-      "cypress/fixtures/Mat_Tit.zip"
-    );
+    cy.mount(<CreateZipProject />);
+    cy.get("[data-cy=zip-file-input]").selectFile("cypress/fixtures/john.zip");
     cy.get("button").click();
     cy.get("p").should("contains.text", "wohoo it worked!");
   });

@@ -1,8 +1,8 @@
 import { useEffect, useReducer } from "react";
 
 import {
-  arrayBufferToUsfmArray,
-  validateUsfmArray,
+  arrayBufferToUsfmData,
+  validateUsfmData,
 } from "../utils/zipUsfmHelpers";
 
 // Constants
@@ -18,7 +18,7 @@ const initialState = {
   status: "idle",
   file: null,
   isLoading: false,
-  usfmData: [],
+  usfmData: null,
   invalidFileType: "",
   uploadError: null,
 };
@@ -56,8 +56,11 @@ const reducer = (state, action) => {
 };
 
 const useZipToUsfmData = (
-  handleZipLoad = (file) => console.log(file),
-  shouldValidate = true
+  handleZipLoad = (usfmData, file) => {
+    console.log(file);
+    console.log(usfmData);
+  },
+  shouldValidate
 ) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -81,13 +84,12 @@ const useZipToUsfmData = (
   useEffect(() => {
     const processFile = async () => {
       if (state.file && state.isLoading) {
-        // TODO: We can check if file is valid zip file
         try {
           if (state.file.type.includes("zip")) {
             const arrayBuffer = await state.file.arrayBuffer();
-            const usfmArray = await arrayBufferToUsfmArray(arrayBuffer);
+            const usfmData = await arrayBufferToUsfmData(arrayBuffer);
 
-            if (!usfmArray.length) {
+            if (!usfmData.length) {
               dispatch({
                 type: "invalid-file",
                 fileType: "Zip file with no usfm files was uploaded!",
@@ -96,8 +98,8 @@ const useZipToUsfmData = (
             }
 
             if (shouldValidate) {
-              const usfmValidatedArray = validateUsfmArray(usfmArray);
-              if (!usfmValidatedArray.length) {
+              const usfmValidatedData = validateUsfmData(usfmData);
+              if (!usfmValidatedData.length) {
                 dispatch({
                   type: "invalid-file",
                   fileType: "All USFM files within the zip were invalid!",
@@ -106,15 +108,14 @@ const useZipToUsfmData = (
               }
               dispatch({
                 type: "file-uploaded",
-                usfmData: usfmValidatedArray,
+                usfmData: usfmValidatedData,
               });
             } else {
               dispatch({
                 type: "file-uploaded",
-                usfmData: usfmArray,
+                usfmData: usfmData,
               });
             }
-            handleZipLoad(state.file);
           } else {
             dispatch({
               type: "invalid-file",
@@ -132,7 +133,10 @@ const useZipToUsfmData = (
     processFile();
   }, [state.file, state.isLoading]);
 
-  // Now we need to read usfm data.
+  // Run callback function when usfm data is successfully uploaded
+  useEffect(() => {
+    if (state.usfmData) handleZipLoad(state.usfmData, state.file);
+  }, [state.usfmData]);
 
   return {
     ...state,

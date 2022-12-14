@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 
-import OpenZipProject from "./components/OpenZipProject";
+import CreateZipProject from "./components/CreateZipProject/CreateZipProject";
+import ProjectList from "./components/ProjectList/ProjectList";
+import useProjectsContext from "./hooks/use-projects-context";
 
 const App = () => {
+  const { fetchProjects } = useProjectsContext();
+
+  const handleCreateZip = (usfmData) => {
+    console.log(usfmData);
+  };
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
   return (
     <div className="App">
-      <OpenZipProject />
+      <CreateZipProject onCreate={handleCreateZip} />
+      <ProjectList />
     </div>
   );
 };

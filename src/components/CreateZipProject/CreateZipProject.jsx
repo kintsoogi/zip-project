@@ -1,28 +1,27 @@
 import React, { useState } from "react";
 
 import ZipFileInput from "./ZipFileInput";
-import useZipToUsfmData from "../hooks/useZipToUsfmData";
-import useLocalForage from "../hooks/useLocalForage";
+import useZipToUsfmData from "../../hooks/use-zip-to-usfm-data";
+import useProjectsContext from "../../hooks/use-projects-context";
 
-const OpenZipProject = () => {
+const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
   const [projectName, setProjectName] = useState("");
-  const { setInStore } = useLocalForage("zip-store");
+  const { addProject } = useProjectsContext();
 
-  const handleZipLoad = async (file) => {
+  const handleZipLoad = async (usfmData, file) => {
     const arrayBuffer = await file.arrayBuffer();
-    await setInStore(projectName, arrayBuffer);
+    await addProject(projectName, arrayBuffer);
+    onCreate(usfmData);
   };
 
   const {
     status,
-    file,
     isLoading,
-    usfmData,
     invalidFileType,
     uploadError,
     onChange,
     onSubmit,
-  } = useZipToUsfmData(handleZipLoad);
+  } = useZipToUsfmData(handleZipLoad, shouldValidate);
 
   if (isLoading) {
     return <div>Loading....</div>;
@@ -46,7 +45,6 @@ const OpenZipProject = () => {
   }
 
   if (status === "UPLOAD_SUCCESS") {
-    console.log(usfmData);
     return (
       <div>
         <p>wohoo it worked!</p>
@@ -56,9 +54,10 @@ const OpenZipProject = () => {
 
   return (
     <div className="open-zip-project">
-      <h1>This is my file input</h1>
+      <h1>Input zipped USFM files...</h1>
       <form onSubmit={onSubmit}>
         <input
+          data-cy="zip-text-input"
           placeholder="Project Name"
           name="projectName"
           value={projectName}
@@ -73,4 +72,4 @@ const OpenZipProject = () => {
   );
 };
 
-export default OpenZipProject;
+export default CreateZipProject;
