@@ -1,17 +1,30 @@
 # Export USFM Zip Demo
 
-This demo demonstrates the ability to create a project of USFM books given a zip file containing usfm files.
+This demo demonstrates the ability to save usfm project data to zip file.
 
 ## Example
-
-Idk say stuff
 
 ```jsx
 import React from "react";
 import { ProjectsProvider } from "../../context/projects";
 
+const USFM_DATA = [
+  {
+    filename: "fake1.usfm",
+    usfmText: "id TITmt Titus 1p",
+  },
+  {
+    filename: "fake2.usfm",
+    usfmText: "id TITmt Titus 1p",
+  },
+  {
+    filename: "fake3.usfm",
+    usfmText: "id TITmt Titus 1p",
+  },
+];
+
 function Component() {
-  return <ExportUsfmZip />;
+  return <ExportUsfmZip zipFilename="test" usfmData={USFM_DATA} />;
 }
 
 <ProjectsProvider>
