@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import ZipFileInput from "./ZipFileInput";
 import useZipToUsfmData from "../../hooks/use-zip-to-usfm-data";
@@ -70,6 +71,13 @@ const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
       </form>
     </div>
   );
+};
+
+CreateZipProject.propTypes = {
+  /** Parameters: usfmData | Called when zip file has loaded to act upon usfm data */
+  onCreate: PropTypes.func,
+  /**  Passed to determine whether or not usfm files within the zip should be validated*/
+  shouldValidate: PropTypes.bool,
 };
 
 export default CreateZipProject;
