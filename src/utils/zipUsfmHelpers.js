@@ -42,5 +42,13 @@ export const arrayBufferToUsfmData = async (zipArrayBuffer) => {
   return usfmDataArray;
 };
 
-// TODO: Create functionality to turn usfm data into array buffer
-// export const usfmArrayToArrayBuffer = () => {};
+export const usfmDataToArrayBuffer = async (usfmData) => {
+  const zip = new JSZip();
+
+  usfmData.forEach(({ filename, usfmText }) => {
+    zip.file(filename, usfmText);
+  });
+
+  const arrayBuffer = await zip.generateAsync({ type: "arraybuffer" });
+  return arrayBuffer;
+};
