@@ -10,6 +10,7 @@ module.exports = {
   components: [
     "src/components/CreateZipProject/CreateZipProject.jsx",
     "src/components/ProjectList/ProjectList.jsx",
+    "src/components/ExportUsfmZip/ExportUsfmZip.jsx",
   ],
   getComponentPathLine: (componentPath) => {
     const name = path.basename(componentPath, ".jsx");

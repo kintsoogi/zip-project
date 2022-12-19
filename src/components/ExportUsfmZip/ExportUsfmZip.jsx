@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 import { usfmDataToArrayBuffer } from "../../utils/zipUsfmHelpers";
 import useProjectsContext from "../../hooks/use-projects-context";
@@ -20,11 +20,8 @@ const ExportUsfmZip = () => {
   );
 };
 
-ExportUsfmZip.propTypes = {
-  /** Parameters: usfmData | Called when zip file has loaded to act upon usfm data */
-  onCreate: PropTypes.func,
-  /**  Passed to determine whether or not usfm files within the zip should be validated*/
-  shouldValidate: PropTypes.bool,
-};
+// ExportUsfmZip.propTypes = {
+
+// };
 
 export default ExportUsfmZip;
