@@ -24,7 +24,10 @@ const App = () => {
         <div>
           <h4>Selected Project:</h4>
           <p>{selectedProject.name}</p>
-          <ExportUsfmZip />
+          <ExportUsfmZip
+            zipFilename={selectedProject.name}
+            usfmData={selectedProject.data}
+          />
         </div>
       ) : null}
     </div>

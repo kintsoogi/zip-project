@@ -42,13 +42,14 @@ export const arrayBufferToUsfmData = async (zipArrayBuffer) => {
   return usfmDataArray;
 };
 
-export const usfmDataToArrayBuffer = async (usfmData) => {
+export const usfmDataToFileData = async (usfmData) => {
   const zip = new JSZip();
 
   usfmData.forEach(({ filename, usfmText }) => {
     zip.file(filename, usfmText);
   });
 
-  const arrayBuffer = await zip.generateAsync({ type: "arraybuffer" });
-  return arrayBuffer;
+  const blob = await zip.generateAsync({ type: "blob" });
+  const arrayBuffer = await blob.arrayBuffer();
+  return { blob, arrayBuffer };
 };

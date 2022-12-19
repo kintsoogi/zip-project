@@ -1,16 +1,13 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import { saveAs } from "file-saver";
+import PropTypes from "prop-types";
 
-import { usfmDataToArrayBuffer } from "../../utils/zipUsfmHelpers";
-import useProjectsContext from "../../hooks/use-projects-context";
+import { usfmDataToFileData } from "../../utils/zipUsfmHelpers";
 
-const ExportUsfmZip = () => {
-  const { selectedProject } = useProjectsContext();
-
-  // Function to handle click on button... do something with selected project
+const ExportUsfmZip = ({ zipFilename, usfmData }) => {
   const handleClick = async () => {
-    console.log(`exporting ${selectedProject.name} usfm data to zip file...`);
-    console.log(await usfmDataToArrayBuffer(selectedProject.data));
+    const { blob } = await usfmDataToFileData(usfmData);
+    saveAs(blob, `${zipFilename}.zip`);
   };
 
   return (
@@ -20,8 +17,11 @@ const ExportUsfmZip = () => {
   );
 };
 
-// ExportUsfmZip.propTypes = {
-
-// };
+ExportUsfmZip.propTypes = {
+  /** Filename to write the zip file to */
+  zipFilename: PropTypes.string,
+  /** Array of USFM data objects to be zipped */
+  usfmData: PropTypes.array,
+};
 
 export default ExportUsfmZip;
