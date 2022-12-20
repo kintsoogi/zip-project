@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 import localforage from "localforage";
 
 const useLocalForage = () => {
@@ -14,7 +16,7 @@ const useLocalForage = () => {
     }
   };
 
-  const getAllFromStore = async () => {
+  const getAllFromStore = useCallback(async () => {
     let result = [];
 
     const iteratorCallback = (value, key, iterationNumber) => {
@@ -28,7 +30,7 @@ const useLocalForage = () => {
       console.log("Error while iterating over localforage...", error);
       return false;
     }
-  };
+  }, []);
 
   const getFromStore = async (key) => {
     try {

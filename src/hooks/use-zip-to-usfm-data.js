@@ -131,12 +131,12 @@ const useZipToUsfmData = (
       }
     };
     processFile();
-  }, [state.file, state.isLoading]);
+  }, [state.file, state.isLoading, shouldValidate]);
 
   // Run callback function when usfm data is successfully uploaded
   useEffect(() => {
     if (state.usfmData) handleZipLoad(state.usfmData, state.file);
-  }, [state.usfmData]);
+  }, [state.usfmData, state.file, handleZipLoad]);
 
   return {
     ...state,

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { usfmDataToFileData } from "../../utils/zipUsfmHelpers";
 
-const ExportUsfmZip = ({ zipFilename, usfmData }) => {
+const ExportUsfmZip = ({ usfmData, zipFilename = "usfm_files" }) => {
   const handleClick = async () => {
     const { blob } = await usfmDataToFileData(usfmData);
     saveAs(blob, `${zipFilename}.zip`);

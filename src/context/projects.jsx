@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useCallback } from "react";
 
 import {
   arrayBufferToUsfmData,
@@ -17,7 +17,7 @@ const ProjectsProvider = ({ children }) => {
     return projects.some((project) => project.name === projectName);
   };
 
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     const storeData = await getAllFromStore();
     const projectPromises = storeData.map(async (data) => {
       return {
@@ -30,7 +30,7 @@ const ProjectsProvider = ({ children }) => {
     });
     const _projects = await Promise.all(projectPromises);
     setProjects(_projects);
-  };
+  }, [getAllFromStore]);
 
   const getProject = (projectName) => {
     const foundProject = projects.find(
@@ -66,6 +66,7 @@ const ProjectsProvider = ({ children }) => {
       if (project.name === projectName) {
         return { ...project, data: usfmData };
       }
+      return project;
     });
     const { usfmArrayBuffer } = usfmDataToFileData(usfmData);
 

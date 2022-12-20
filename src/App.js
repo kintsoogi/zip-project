@@ -14,7 +14,7 @@ const App = () => {
 
   useEffect(() => {
     fetchProjects();
-  }, []);
+  }, [fetchProjects]);
 
   return (
     <div className="App">

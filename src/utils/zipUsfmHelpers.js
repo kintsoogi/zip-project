@@ -1,7 +1,7 @@
 import grammar from "usfm-grammar";
 import JSZip from "jszip";
 
-const USFM_REGEX = /([a-zA-Z0-9\s_\\.\-\(\):])+(.usfm)$/i;
+const USFM_REGEX = /([a-zA-Z0-9\s_\\.\-():])+(.usfm)$/i;
 
 const isValidUsfmFile = (usfmText) => {
   const usfmParser = new grammar.USFMParser(usfmText, grammar.LEVEL.RELAXED);
