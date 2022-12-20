@@ -2,6 +2,7 @@ import grammar from "usfm-grammar";
 import JSZip from "jszip";
 
 const USFM_REGEX = /([a-zA-Z0-9\s_\\.\-():])+(.usfm)$/i;
+const BOOK_ID_REGEX = /^\\id ([A-Z0-9]{3})/;
 
 const isValidUsfmFile = (usfmText) => {
   const usfmParser = new grammar.USFMParser(usfmText, grammar.LEVEL.RELAXED);
@@ -24,6 +25,12 @@ const getUsfmTexts = async (zip) => {
   return await Promise.all(usfmPromises);
 };
 
+const extractBookIdFromText = (usfmText) => {
+  const found = usfmText.match(BOOK_ID_REGEX);
+  const textBookId = found[1];
+  return textBookId;
+};
+
 export const arrayBufferToUsfmData = async (zipArrayBuffer) => {
   // Create jszip and load data from array buffer
   const zip = await JSZip.loadAsync(zipArrayBuffer);
@@ -34,8 +41,7 @@ export const arrayBufferToUsfmData = async (zipArrayBuffer) => {
     return {
       filename: zipObj.name,
       usfmText: usfmTexts[fileIndex],
-      // TODO: Generate bookId from usfmText
-      // bookId: getBookId(usfmTexts[fileIndex]),
+      bookId: extractBookIdFromText(usfmTexts[fileIndex]),
     };
   });
 
