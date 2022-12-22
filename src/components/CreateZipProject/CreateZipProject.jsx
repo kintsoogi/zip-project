@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import ZipFileInput from "./ZipFileInput";
-import useZipToUsfmData from "../../hooks/use-zip-to-usfm-data";
+import useZipUsfmFileInput from "../../hooks/use-zip-usfm-file-input";
 import useProjectsContext from "../../hooks/use-projects-context";
 
 const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
@@ -22,7 +21,7 @@ const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
     uploadError,
     onChange,
     onSubmit,
-  } = useZipToUsfmData(handleZipLoad, shouldValidate);
+  } = useZipUsfmFileInput(handleZipLoad, shouldValidate);
 
   if (isLoading) {
     return <div>Loading....</div>;
@@ -66,7 +65,7 @@ const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
             setProjectName(e.target.value);
           }}
         />
-        <ZipFileInput onChange={onChange} />
+        <input type="file" accept=".zip" onChange={onChange} />
         <button>Submit</button>
       </form>
     </div>

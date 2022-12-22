@@ -6,6 +6,7 @@ const ZipFileInput = ({ onChange }) => {
       data-cy="zip-file-input"
       type="file"
       accept=".zip"
+      hidden
       onChange={onChange}
     />
   );

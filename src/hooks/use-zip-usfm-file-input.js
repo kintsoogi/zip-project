@@ -55,7 +55,7 @@ const reducer = (state, action) => {
   }
 };
 
-const useZipToUsfmData = (
+const useZipUsfmFileInput = (
   handleZipLoad = (usfmData, file) => {
     console.log(file);
     console.log(usfmData);
@@ -64,8 +64,7 @@ const useZipToUsfmData = (
 ) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     if (state.file) {
       dispatch({ type: "submit" });
     } else {
@@ -73,7 +72,7 @@ const useZipToUsfmData = (
     }
   };
 
-  const onChange = async (e) => {
+  const onChange = (e) => {
     if (e.target.files[0]) {
       dispatch({ type: "upload", file: e.target.files[0] });
     }
@@ -145,4 +144,4 @@ const useZipToUsfmData = (
   };
 };
 
-export default useZipToUsfmData;
+export default useZipUsfmFileInput;
