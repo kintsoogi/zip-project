@@ -8,7 +8,7 @@ This is done primarily through the _useZipUsfmFileInput_ hook, and input compone
 
 ```jsx
 import React, { useState } from "react";
-import { useZipUsfmFileInput } from "../../hooks/use-zip-usfm-file-input.js";
+import useZipUsfmFileInput from "./use-zip-usfm-file-input";
 
 function Component() {
   const [usfmArray, setUsfmArray] = useState([]);

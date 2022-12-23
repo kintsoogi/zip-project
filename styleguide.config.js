@@ -1,51 +1,50 @@
 const path = require('path')
-const webpack = require('webpack')
+const upperFirst = require('lodash/upperFirst')
+const camelCase = require('lodash/camelCase')
 
-const { name: packageName, version, repository } = require('./package.json')
+const { name, version, repository } = require('./package.json')
+
+const sections = [
+  {
+    name: 'README',
+    content: 'README.md',
+  },
+  {
+    name: 'Examples',
+    components: () => [
+      'src/hooks/use-zip-usfm-file-input.jsx',
+      'src/components/CreateZipProject/CreateZipProject.jsx',
+      'src/components/ProjectList/ProjectList.jsx',
+      'src/components/ExportUsfmZip/ExportUsfmZip.jsx',
+    ],
+  },
+]
 
 module.exports = {
+  //   assetsDir: "src/data",
   usageMode: 'expand',
   exampleMode: 'expand',
-  moduleAliases: {},
-  components: [
-    'src/components/ZipFileInput/ZipFileInput.jsx',
-    'src/components/CreateZipProject/CreateZipProject.jsx',
-    'src/components/ProjectList/ProjectList.jsx',
-    'src/components/ExportUsfmZip/ExportUsfmZip.jsx',
-  ],
+  pagePerSection: true,
+  sections,
+  moduleAliases: { 'zip-package': path.resolve(__dirname, 'src') },
   getComponentPathLine: componentPath => {
-    const name = path.basename(componentPath, '.jsx')
-    return `import { ${name} } from '${packageName}';`
+    const _name = path.basename(componentPath, '.jsx')
+    return `import { ${_name.split('.')[0]} } from '${name}';`
   },
-  title: `${packageName} v${version}`,
+  title: `${upperFirst(camelCase(name))} v${version}`,
   ribbon: {
     url: repository.url,
     text: 'View on GitHub',
   },
-  dangerouslyUpdateWebpackConfig(config) {
-    config.resolve.fallback = {
-      crypto: require.resolve('crypto-browserify'),
-      fs: false,
-    }
-
-    config.module.rules.push({
-      test: /.\.md$/,
-      type: 'javascript/auto',
-    })
-    config.plugins.push(
-      new webpack.NormalModuleReplacementPlugin(
-        /react-styleguidist\/lib\/loaders\/utils\/client\/requireInRuntime$/,
-        'react-styleguidist/lib/loaders/utils/client/requireInRuntime'
-      )
-    )
-    config.plugins.push(
-      new webpack.NormalModuleReplacementPlugin(
-        /react-styleguidist\/lib\/loaders\/utils\/client\/evalInContext$/,
-        'react-styleguidist/lib/loaders/utils/client/evalInContext'
-      )
-    )
-    return config
+  webpackConfig: {
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+        },
+      ],
+    },
   },
 }
-
-module.exports.moduleAliases[packageName] = path.resolve(__dirname, 'src')

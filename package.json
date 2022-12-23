@@ -1,57 +1,45 @@
 {
-  "name": "zip-project",
-  "version": "0.0.11",
-  "main": "dist/index.js",
+  "name": "zip-package",
+  "version": "0.0.12",
+  "description": "Library of React Hooks and Components used to open and export zipped usfm files.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kintsoogi/zip-project"
+    "url": "https://github.com/kintsoogi/zip-package"
   },
-  "homepage": "https://zip-project.netlify.app/",
-  "dependencies": {
-    "@babel/plugin-proposal-export-default-from": "^7.18.10",
-    "file-saver": "^2.0.5",
-    "jszip": "^3.10.1",
-    "localforage": "^1.10.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "styleguidist server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zip",
+    "usfm"
+  ],
+  "author": "kintsoogi",
+  "license": "MIT",
+  "peerDependencies": {
+    "prop-types": "^15.x",
+    "react": "^18.2.x",
+    "react-dom": "^18.2.x"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@material-ui/core": "^4.12.4",
+    "babel-loader": "^9.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "react-styleguidist": "^13.0.0",
+    "webpack": "^5.75.0"
+  },
+  "dependencies": {
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "localforage": "^1.10.0",
     "url": "^0.11.0",
     "usfm-grammar": "^2.3.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "styleguidist build",
-    "prepublishOnly": "rm -rf ./dist && babel ./src --out-dir ./dist -s inline",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.20.5",
-    "@babel/preset-env": "^7.20.2",
-    "@babel/preset-react": "^7.18.6",
-    "babel-loader": "^9.1.0",
-    "crypto-browserify": "^3.12.0",
-    "cypress": "^11.2.0",
-    "react-styleguidist": "^13.0.0"
   }
 }
