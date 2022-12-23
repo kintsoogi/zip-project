@@ -1,15 +1,16 @@
 {
-  "name": "zip-package",
+  "name": "zip-project",
   "version": "0.0.12",
   "description": "Library of React Hooks and Components used to open and export zipped usfm files.",
   "repository": {
     "type": "git",
     "url": "https://github.com/kintsoogi/zip-package"
   },
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "start": "styleguidist server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "rm -rf ./build && babel ./src --out-dir ./build -s inline"
   },
   "keywords": [
     "zip",
