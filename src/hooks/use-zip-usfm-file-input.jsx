@@ -50,6 +50,8 @@ const reducer = (state, action) => {
         uploadError: action.error,
         status: UPLOAD_ERROR,
       }
+    case 'reload':
+      return { ...initialState }
     default:
       return state
   }
@@ -76,6 +78,10 @@ const useZipUsfmFileInput = (
     if (e.target.files[0]) {
       dispatch({ type: 'upload', file: e.target.files[0] })
     }
+  }
+
+  const triggerReload = () => {
+    dispatch({ type: 'reload' })
   }
 
   // When user has submitted the file, proccess it, validate it, and call parameter function
@@ -141,6 +147,7 @@ const useZipUsfmFileInput = (
     ...state,
     onChange,
     onSubmit,
+    triggerReload,
   }
 }
 
