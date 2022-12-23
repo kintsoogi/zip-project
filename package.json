@@ -1,6 +1,6 @@
 {
   "name": "zip-project",
-  "version": "0.3.0",
+  "version": "0.0.11",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
@@ -8,6 +8,7 @@
   },
   "homepage": "https://zip-project.netlify.app/",
   "dependencies": {
+    "@babel/plugin-proposal-export-default-from": "^7.18.10",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "localforage": "^1.10.0",
@@ -16,8 +17,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "url": "^0.11.0",
-    "usfm-grammar": "^2.3.0",
-    "@babel/plugin-proposal-export-default-from": "^7.18.10"
+    "usfm-grammar": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
