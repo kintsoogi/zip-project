@@ -1,3 +1,18 @@
-node_modules
-src
+node_modules/
+src/
+cypress/
+cypress.config.js
+.DS_Store
+.env
+npm-debug.log
+Thumbs.db
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.log
+.eslintcache
+styleguide/
+package-lock.json
+yarn.lock
 
