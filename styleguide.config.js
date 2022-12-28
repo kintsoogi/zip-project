@@ -12,10 +12,10 @@ const sections = [
   {
     name: 'Examples',
     components: () => [
-      'src/hooks/use-zip-usfm-file-input.jsx',
+      'src/hooks/useZipUsfmFileInput/useZipUsfmFileInput.jsx',
+      'src/hooks/useExportUsfmZip/useExportUsfmZip.jsx',
       'src/components/CreateZipProject/CreateZipProject.jsx',
       'src/components/ProjectList/ProjectList.jsx',
-      'src/components/ExportUsfmZip/ExportUsfmZip.jsx',
     ],
   },
 ]

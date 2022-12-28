@@ -7,14 +7,14 @@ This is done primarily through the _useZipUsfmFileInput_ hook, and input compone
 ## Example
 
 ```jsx
-import React, { useState } from "react";
-import useZipUsfmFileInput from "./use-zip-usfm-file-input";
+import React, { useState } from 'react'
+import useZipUsfmFileInput from './useZipUsfmFileInput'
 
 function Component() {
-  const [usfmArray, setUsfmArray] = useState([]);
+  const [usfmArray, setUsfmArray] = useState([])
   const handleZipLoad = (usfmData, file) => {
-    setUsfmArray([...usfmData]);
-  };
+    setUsfmArray([...usfmData])
+  }
 
   const {
     status,
@@ -23,10 +23,10 @@ function Component() {
     uploadError,
     onChange,
     onSubmit,
-  } = useZipUsfmFileInput(handleZipLoad, true);
+  } = useZipUsfmFileInput(handleZipLoad, true)
 
   if (isLoading) {
-    return <div>Loading....</div>;
+    return <div>Loading....</div>
   }
 
   if (uploadError) {
@@ -35,7 +35,7 @@ function Component() {
         <h1>An Error occured:</h1>
         <p>{uploadError.message}</p>
       </div>
-    );
+    )
   }
 
   if (invalidFileType) {
@@ -43,23 +43,23 @@ function Component() {
       <div>
         <p>{`Invalid file upload: ${invalidFileType}`}</p>
       </div>
-    );
+    )
   }
 
-  if (status === "UPLOAD_SUCCESS") {
-    const usfmFiles = usfmArray.map((data) => {
-      return { ...data, usfmText: data.usfmText.slice(0, 10) };
-    });
-    return <div>{JSON.stringify(usfmFiles)}</div>;
+  if (status === 'UPLOAD_SUCCESS') {
+    const usfmFiles = usfmArray.map(data => {
+      return { ...data, usfmText: data.usfmText.slice(0, 10) }
+    })
+    return <div>{JSON.stringify(usfmFiles)}</div>
   }
 
   return (
     <>
-      <input type="file" accept=".zip" onChange={onChange} />
+      <input type='file' accept='.zip' onChange={onChange} />
       <button onClick={onSubmit}>Submit</button>
     </>
-  );
+  )
 }
 
-<Component />;
+;<Component />
 ```

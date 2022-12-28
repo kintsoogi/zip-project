@@ -3,11 +3,12 @@ import { useEffect, useReducer } from 'react'
 import {
   arrayBufferToUsfmData,
   validateUsfmData,
-} from '../utils/zipUsfmHelpers'
+} from '../../utils/zipUsfmHelpers'
 
 // Constants
 const CANCEL_FILE_OPEN_ERROR =
   "Cannot read properties of undefined (reading 'type')"
+const USFM_NO_BOOKID_ERROR = 'USFM Text Invalid! ~ Did not contain Book ID'
 const FILE_LOADED = 'FILE_LOADED'
 const INIT = 'INIT'
 const INVALID_FILE = 'INVALID_FILE'
@@ -128,6 +129,14 @@ const useZipUsfmFileInput = (
             })
           }
         } catch (error) {
+          if (error.message === USFM_NO_BOOKID_ERROR) {
+            dispatch({
+              type: 'invalid-file',
+              fileType:
+                'Zip contained Invalid USFM files that did not contain Book IDs!',
+            })
+            return
+          }
           if (error.message !== CANCEL_FILE_OPEN_ERROR) {
             console.error(error)
             dispatch({ type: 'upload-error', error })
