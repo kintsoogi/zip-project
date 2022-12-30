@@ -1,6 +1,6 @@
 {
   "name": "zip-project",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "Library of React Hooks and Components used to open and export zipped usfm files.",
   "repository": {
     "type": "git",
