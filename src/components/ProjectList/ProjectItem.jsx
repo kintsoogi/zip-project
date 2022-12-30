@@ -1,20 +1,20 @@
-import React from "react";
+import React from 'react'
 
-import useProjectsContext from "../../hooks/use-projects-context";
+import useProjectsContext from '../../hooks/useProjectsContext'
 
 const ProjectItem = ({ project }) => {
-  const { selectProject } = useProjectsContext();
+  const { selectProject } = useProjectsContext()
 
   return (
     <tr
-      data-cy="project-item"
+      data-cy='project-item'
       onClick={() => selectProject(project)}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: 'pointer' }}
     >
       <td>{project.name}</td>
       <td>{project.data.length}</td>
     </tr>
-  );
-};
+  )
+}
 
-export default ProjectItem;
+export default ProjectItem

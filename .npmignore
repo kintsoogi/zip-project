@@ -1,7 +1,10 @@
+node_modules/
+src/
+cypress/
+cypress.config.js
 .DS_Store
 .env
 npm-debug.log
-node_modules/
 Thumbs.db
 .idea/
 .vscode/
@@ -12,4 +15,4 @@ Thumbs.db
 styleguide/
 package-lock.json
 yarn.lock
-build/
+

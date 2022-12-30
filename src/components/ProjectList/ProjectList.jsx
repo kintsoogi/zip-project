@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react'
 
-import ProjectItem from "./ProjectItem";
-import useProjectsContext from "../../hooks/use-projects-context";
+import ProjectItem from './ProjectItem'
+import useProjectsContext from '../../hooks/useProjectsContext'
 
 const ProjectList = () => {
-  const { projects } = useProjectsContext();
+  const { projects } = useProjectsContext()
 
-  const renderedProjectItems = projects.map((project) => (
+  const renderedProjectItems = projects.map(project => (
     <ProjectItem key={project.name} project={project} />
-  ));
+  ))
 
   return (
     <div>
@@ -23,7 +23,7 @@ const ProjectList = () => {
         <tbody>{renderedProjectItems}</tbody>
       </table>
     </div>
-  );
-};
+  )
+}
 
-export default ProjectList;
+export default ProjectList

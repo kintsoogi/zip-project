@@ -5,22 +5,22 @@ This Demo demonstrates that project data can be retrieved from IndexedDB via loc
 _If no data is displaying, upload a zip containing usfm files in [CreateZipProject](#createzipproject) component_
 
 ```jsx
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react'
 
-import { ProjectsProvider } from "../../context/projects";
-import useProjectsContext from "../../hooks/use-projects-context.js";
+import { ProjectsProvider } from '../../context/projects'
+import useProjectsContext from '../../hooks/useProjectsContext'
 
 function Component() {
-  const { fetchProjects } = useProjectsContext();
+  const { fetchProjects } = useProjectsContext()
 
   useEffect(() => {
-    fetchProjects();
-  }, []);
+    fetchProjects()
+  }, [])
 
-  return <ProjectList />;
+  return <ProjectList />
 }
 
-<ProjectsProvider>
+;<ProjectsProvider>
   <Component />
-</ProjectsProvider>;
+</ProjectsProvider>
 ```
