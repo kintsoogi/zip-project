@@ -9,8 +9,7 @@ const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
   const { addProject } = useProjectsContext()
 
   const handleZipLoad = async (usfmData, file) => {
-    const arrayBuffer = await file.arrayBuffer()
-    await addProject(projectName, arrayBuffer)
+    await addProject(projectName, usfmData)
     onCreate(usfmData)
   }
 

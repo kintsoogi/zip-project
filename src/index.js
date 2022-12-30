@@ -1,6 +1,11 @@
-import useZipUsfmFileInput from './hooks/use-zip-usfm-file-input'
-import CreateZipProject from './components/CreateZipProject/CreateZipProject'
-import ProjectList from './components/ProjectList/ProjectList'
-import ExportUsfmZip from './components/ExportUsfmZip/ExportUsfmZip'
+import useZipUsfmFileInput from './hooks/useZipUsfmFileInput/useZipUsfmFileInput'
+import useExportUsfmZip from './hooks/useExportUsfmZip/useExportUsfmZip'
+import useLocalForage from './hooks/useLocalForage/useLocalForage'
+import useTransformUsfmZip from './hooks/useTransformUsfmZip/useTransformUsfmZip'
 
-export { useZipUsfmFileInput, CreateZipProject, ProjectList, ExportUsfmZip }
+export {
+  useZipUsfmFileInput,
+  useExportUsfmZip,
+  useLocalForage,
+  useTransformUsfmZip,
+}

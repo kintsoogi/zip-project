@@ -12,3 +12,4 @@ Thumbs.db
 styleguide/
 package-lock.json
 yarn.lock
+build/

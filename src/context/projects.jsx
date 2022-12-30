@@ -1,17 +1,17 @@
 import React, { createContext, useState, useCallback } from 'react'
 
-import {
-  arrayBufferToUsfmData,
-  usfmDataToFileData,
-} from '../utils/zipUsfmHelpers'
-import useLocalForage from '../hooks/useLocalForage'
+import useTransformUsfmZip from '../hooks/useTransformUsfmZip/useTransformUsfmZip'
+import useLocalForage from '../hooks/useLocalForage/useLocalForage'
 
 const ProjectsContext = createContext()
 
 const ProjectsProvider = ({ children }) => {
   const [projects, setProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState(null)
-  const { getAllFromStore, setInStore, deleteFromStore } = useLocalForage()
+  const { getAllFromStore, setInStore, deleteFromStore } =
+    useLocalForage('projects')
+
+  const { storeBufferToUsfmData, usfmDataToStoreBuffer } = useTransformUsfmZip()
 
   const projectExists = projectName => {
     return projects.some(project => project.name === projectName)
@@ -23,7 +23,7 @@ const ProjectsProvider = ({ children }) => {
       return {
         id: data.id,
         name: data.key,
-        data: await arrayBufferToUsfmData(data.value),
+        data: await storeBufferToUsfmData(data.value),
         // TODO: (maybe) detect language in data and store
         // language: detectLanguage(data.value)
       }
@@ -37,7 +37,7 @@ const ProjectsProvider = ({ children }) => {
     return { ...foundProject }
   }
 
-  const addProject = async (projectName, usfmArrayBuffer) => {
+  const addProject = async (projectName, usfmData) => {
     if (projectExists(projectName)) {
       // complain to the user
       return false
@@ -46,8 +46,10 @@ const ProjectsProvider = ({ children }) => {
     const newProject = {
       id: projects.length,
       name: projectName,
-      data: await arrayBufferToUsfmData(usfmArrayBuffer),
+      data: usfmData,
     }
+
+    const usfmArrayBuffer = await usfmDataToStoreBuffer(usfmData)
 
     await setInStore(projectName, usfmArrayBuffer)
     setProjects([...projects, newProject])
@@ -66,7 +68,7 @@ const ProjectsProvider = ({ children }) => {
       }
       return project
     })
-    const { usfmArrayBuffer } = usfmDataToFileData(usfmData)
+    const usfmArrayBuffer = await usfmDataToStoreBuffer(usfmData)
 
     await setInStore(projectName, usfmArrayBuffer)
     setProjects(updatedProjects)

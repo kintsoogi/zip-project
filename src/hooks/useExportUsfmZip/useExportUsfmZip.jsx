@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
 import { saveAs } from 'file-saver'
 import PropTypes from 'prop-types'
 
-import { usfmDataToFileData } from '../../utils/zipUsfmHelpers'
+import useTransformUsfmZip from '../useTransformUsfmZip/useTransformUsfmZip'
 
 const useExportUsfmZip = (usfmData, zipFilename = 'usfm_files') => {
+  const { usfmDataToFileData } = useTransformUsfmZip()
+
   const handleExportZip = async () => {
-    const { blob } = await usfmDataToFileData(usfmData)
+    const blob = await usfmDataToFileData(usfmData)
     saveAs(blob, `${zipFilename}.zip`)
   }
 
