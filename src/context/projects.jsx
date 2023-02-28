@@ -1,95 +1,95 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useCallback } from 'react'
 
-import {
-  arrayBufferToUsfmData,
-  // usfmArrayToArrayBuffer,
-} from "../utils/zipUsfmHelpers";
-import useLocalForage from "../hooks/use-local-forage";
+import useTransformUsfmZip from '../hooks/useTransformUsfmZip/useTransformUsfmZip'
+import useLocalForage from '../hooks/useLocalForage/useLocalForage'
 
-const ProjectsContext = createContext();
+const ProjectsContext = createContext()
 
 const ProjectsProvider = ({ children }) => {
-  const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
-  const { getAllFromStore, setInStore, deleteFromStore } = useLocalForage();
+  const [projects, setProjects] = useState([])
+  const [selectedProject, setSelectedProject] = useState(null)
+  const { getAllFromStore, setInStore, deleteFromStore } =
+    useLocalForage('projects')
 
-  const projectExists = (projectName) => {
-    return projects.some((project) => project.name === projectName);
-  };
+  const { storeBufferToUsfmData, usfmDataToStoreBuffer } = useTransformUsfmZip()
 
-  const fetchProjects = async () => {
-    const storeData = await getAllFromStore();
-    const projectPromises = storeData.map(async (data) => {
+  const projectExists = projectName => {
+    return projects.some(project => project.name === projectName)
+  }
+
+  const fetchProjects = useCallback(async () => {
+    const storeData = await getAllFromStore()
+    const projectPromises = storeData.map(async data => {
       return {
         id: data.id,
         name: data.key,
-        data: await arrayBufferToUsfmData(data.value),
+        data: await storeBufferToUsfmData(data.value),
         // TODO: (maybe) detect language in data and store
         // language: detectLanguage(data.value)
-      };
-    });
-    const _projects = await Promise.all(projectPromises);
-    setProjects(_projects);
-  };
+      }
+    })
+    const _projects = await Promise.all(projectPromises)
+    setProjects(_projects)
+  }, [getAllFromStore])
 
-  const getProject = (projectName) => {
-    const foundProject = projects.find(
-      (project) => project.name === projectName
-    );
-    return { ...foundProject };
-  };
+  const getProject = projectName => {
+    const foundProject = projects.find(project => project.name === projectName)
+    return { ...foundProject }
+  }
 
-  const addProject = async (projectName, usfmArrayBuffer) => {
+  const addProject = async (projectName, usfmData) => {
     if (projectExists(projectName)) {
       // complain to the user
-      return false;
+      return false
     }
 
     const newProject = {
       id: projects.length,
       name: projectName,
-      data: await arrayBufferToUsfmData(usfmArrayBuffer),
-    };
+      data: usfmData,
+    }
 
-    await setInStore(projectName, usfmArrayBuffer);
-    setProjects([...projects, newProject]);
-    return true;
-  };
+    const usfmArrayBuffer = await usfmDataToStoreBuffer(usfmData)
+
+    await setInStore(projectName, usfmArrayBuffer)
+    setProjects([...projects, newProject])
+    return true
+  }
 
   const updateProject = async (projectName, usfmData) => {
     if (!projectExists(projectName)) {
       // complain to the user
-      return false;
+      return false
     }
 
-    const updatedProjects = projects.map((project) => {
+    const updatedProjects = projects.map(project => {
       if (project.name === projectName) {
-        return { ...project, data: usfmData };
+        return { ...project, data: usfmData }
       }
-    });
-    const usfmArrayBuffer = [];
-    // const usfmArrayBuffer = usfmArrayToArrayBuffer(usfmData);
+      return project
+    })
+    const usfmArrayBuffer = await usfmDataToStoreBuffer(usfmData)
 
-    await setInStore(projectName, usfmArrayBuffer);
-    setProjects(updatedProjects);
-    return true;
-  };
+    await setInStore(projectName, usfmArrayBuffer)
+    setProjects(updatedProjects)
+    return true
+  }
 
-  const deleteProject = async (projectName) => {
+  const deleteProject = async projectName => {
     if (!projectExists(projectName)) {
       // complain to the user
-      return false;
+      return false
     }
 
-    await deleteFromStore(projectName);
-    setProjects(projects.filter((project) => project.name !== projectName));
-    return true;
-  };
+    await deleteFromStore(projectName)
+    setProjects(projects.filter(project => project.name !== projectName))
+    return true
+  }
 
-  const selectProject = (project) => {
-    console.log(project);
-    setSelectedProject({ ...project });
-  };
+  const selectProject = project => {
+    console.log(project)
+    setSelectedProject({ ...project })
+  }
 
   const context = {
     projects,
@@ -100,14 +100,14 @@ const ProjectsProvider = ({ children }) => {
     updateProject,
     deleteProject,
     selectProject,
-  };
+  }
 
   return (
     <ProjectsContext.Provider value={context}>
       {children}
     </ProjectsContext.Provider>
-  );
-};
+  )
+}
 
-export { ProjectsProvider };
-export default ProjectsContext;
+export { ProjectsProvider }
+export default ProjectsContext

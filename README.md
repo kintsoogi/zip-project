@@ -91,13 +91,13 @@ To get a local copy up and running follow these simple example steps.
 If you wish to use this library in your app you will need to add it as a dependency with:
 
 ```sh
-npm install uw-editor
+npm install zip-project
 ```
 
 OR
 
 ```shell
-yarn add uw-editor
+yarn add zip-project
 ```
 
 Also you will need to add the peer dependencies:

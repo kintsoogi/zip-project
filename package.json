@@ -1,52 +1,45 @@
 {
   "name": "zip-project",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.27",
+  "description": "Library of React Hooks and Components used to open and export zipped usfm files.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kintsoogi/zip-project"
+    "url": "https://github.com/kintsoogi/zip-package"
   },
-  "homepage": "https://zip-project.netlify.app/",
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "jszip": "^3.10.1",
-    "localforage": "^1.10.0",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "styleguidist server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "rm -rf ./build && babel ./src --out-dir ./build -s inline"
+  },
+  "keywords": [
+    "zip",
+    "usfm"
+  ],
+  "author": "kintsoogi",
+  "license": "MIT",
+  "peerDependencies": {
+    "prop-types": "^15.x",
+    "react": "^18.2.x",
+    "react-dom": "^18.2.x"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "babel-loader": "^9.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "react-styleguidist": "^13.0.0",
+    "webpack": "^5.75.0"
+  },
+  "dependencies": {
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "localforage": "^1.10.0",
     "url": "^0.11.0",
     "usfm-grammar": "^2.3.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "styleguidist build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "crypto-browserify": "^3.12.0",
-    "cypress": "^11.2.0",
-    "react-styleguidist": "^13.0.0"
   }
 }
