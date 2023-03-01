@@ -6,22 +6,23 @@ This demo demonstrates the ability to save and retrieve data from IndexedDB usin
 
 ```jsx
 import React, { useState, useEffect } from 'react'
-import useLocalForage from './useLocalForage'
+import {createStore, setInStore, getAllFromStore} from '../../utils/LocalForageHelpers.js'
 
 function Component() {
   const [storeData, setStoreData] = useState([])
   const { setInStore, getAllFromStore } = useLocalForage('styleguide')
+  const styleguideStore = createStore('styleguide')
 
   useEffect(() => {
     const getResult = async () => {
-      setStoreData(await getAllFromStore())
+      setStoreData(await getAllFromStore(styleguideStore))
     }
     getResult()
   }, [])
 
-  setInStore('key1', { val1: 'val1' })
-  setInStore('key2', { val2: 'val2' })
-  setInStore('key3', { val3: 'val3' })
+  setInStore(styleguideStore, 'key1', { val1: 'val1' })
+  setInStore(styleguideStore, 'key2', { val2: 'val2' })
+  setInStore(styleguideStore, 'key3', { val3: 'val3' })
 
   const renderedData = storeData.map(data => (
     <p>

@@ -16,7 +16,7 @@ export const validateUsfmData = usfmData => {
   return usfmValidatedData
 }
 
-const getUsfmData = async zip => {
+const getUsfmDataFromZip = async zip => {
   const usfmPromises = zip
     .file(USFM_REGEX)
     // Transforms zip file objects to promises to get file data
@@ -39,7 +39,7 @@ export const fileBufferToUsfmData = async zipArrayBuffer => {
   // Create jszip and load data from array buffer
   const zip = await JSZip.loadAsync(zipArrayBuffer)
 
-  const usfmTexts = await getUsfmData(zip)
+  const usfmTexts = await getUsfmDataFromZip(zip)
 
   const usfmDataArray = zip.file(USFM_REGEX).map((zipObj, fileIndex) => {
     return {
@@ -65,7 +65,7 @@ export const usfmDataToFileData = async usfmData => {
 
 export const storeBufferToUsfmData = async storeArrayBuffer => {
   const zip = await JSZip.loadAsync(storeArrayBuffer)
-  const usfmDataStrings = await getUsfmData(zip)
+  const usfmDataStrings = await getUsfmDataFromZip(zip)
   const usfmDataArray = usfmDataStrings.map(usfmDataString =>
     JSON.parse(usfmDataString)
   )

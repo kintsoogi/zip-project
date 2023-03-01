@@ -4,22 +4,26 @@ import {
   storeBufferToUsfmData,
   usfmDataToStoreBuffer,
 } from '../utils/convertUsfmZip'
-import useLocalForage from '../hooks/useLocalForage/useLocalForage'
+import {
+  createStore,
+  getAllFromStore,
+  setInStore,
+  deleteFromStore,
+} from '../utils/LocalForageHelpers'
 
 const ProjectsContext = createContext()
 
 const ProjectsProvider = ({ children }) => {
   const [projects, setProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState(null)
-  const { getAllFromStore, setInStore, deleteFromStore } =
-    useLocalForage('projects')
+  const zipStore = createStore('projects')
 
   const projectExists = projectName => {
     return projects.some(project => project.name === projectName)
   }
 
   const fetchProjects = useCallback(async () => {
-    const storeData = await getAllFromStore()
+    const storeData = await getAllFromStore(zipStore)
     const projectPromises = storeData.map(async data => {
       return {
         id: data.id,
@@ -52,7 +56,7 @@ const ProjectsProvider = ({ children }) => {
 
     const usfmArrayBuffer = await usfmDataToStoreBuffer(usfmData)
 
-    await setInStore(projectName, usfmArrayBuffer)
+    await setInStore(zipStore, projectName, usfmArrayBuffer)
     setProjects([...projects, newProject])
     return true
   }
@@ -71,7 +75,7 @@ const ProjectsProvider = ({ children }) => {
     })
     const usfmArrayBuffer = await usfmDataToStoreBuffer(usfmData)
 
-    await setInStore(projectName, usfmArrayBuffer)
+    await setInStore(zipStore, projectName, usfmArrayBuffer)
     setProjects(updatedProjects)
     return true
   }
@@ -82,7 +86,7 @@ const ProjectsProvider = ({ children }) => {
       return false
     }
 
-    await deleteFromStore(projectName)
+    await deleteFromStore(zipStore, projectName)
     setProjects(projects.filter(project => project.name !== projectName))
     return true
   }
