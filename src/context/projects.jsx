@@ -1,6 +1,9 @@
 import React, { createContext, useState, useCallback } from 'react'
 
-import useTransformUsfmZip from '../hooks/useTransformUsfmZip/useTransformUsfmZip'
+import {
+  storeBufferToUsfmData,
+  usfmDataToStoreBuffer,
+} from '../utils/convertUsfmZip'
 import useLocalForage from '../hooks/useLocalForage/useLocalForage'
 
 const ProjectsContext = createContext()
@@ -10,8 +13,6 @@ const ProjectsProvider = ({ children }) => {
   const [selectedProject, setSelectedProject] = useState(null)
   const { getAllFromStore, setInStore, deleteFromStore } =
     useLocalForage('projects')
-
-  const { storeBufferToUsfmData, usfmDataToStoreBuffer } = useTransformUsfmZip()
 
   const projectExists = projectName => {
     return projects.some(project => project.name === projectName)

@@ -1,6 +1,9 @@
 import { useEffect, useReducer } from 'react'
 
-import useTransformUsfmZip from '../useTransformUsfmZip/useTransformUsfmZip'
+import {
+  fileBufferToUsfmData,
+  validateUsfmData,
+} from '../../utils/convertUsfmZip'
 
 // Constants
 const CANCEL_FILE_OPEN_ERROR =
@@ -63,8 +66,6 @@ const useZipUsfmFileInput = (
   shouldValidate
 ) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-
-  const { fileBufferToUsfmData, validateUsfmData } = useTransformUsfmZip()
 
   const onSubmit = () => {
     if (state.file) {
