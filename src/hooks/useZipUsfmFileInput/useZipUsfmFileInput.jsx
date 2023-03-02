@@ -4,59 +4,12 @@ import {
   fileBufferToUsfmData,
   validateUsfmData,
 } from '../../utils/convertUsfmZip'
+import { fileReducer, initialState } from './FileReducer'
 
 // Constants
 const CANCEL_FILE_OPEN_ERROR =
   "Cannot read properties of undefined (reading 'type')"
 const USFM_NO_BOOKID_ERROR = 'USFM Text Invalid! ~ Did not contain Book ID'
-const FILE_LOADED = 'FILE_LOADED'
-const INIT = 'INIT'
-const INVALID_FILE = 'INVALID_FILE'
-const UPLOAD_ERROR = 'UPLOAD_ERROR'
-const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS'
-
-const initialState = {
-  status: 'idle',
-  file: null,
-  isLoading: false,
-  usfmData: null,
-  invalidFileType: '',
-  uploadError: null,
-}
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'upload':
-      return { ...state, file: action.file, status: FILE_LOADED }
-    case 'submit':
-      return { ...state, isLoading: true, status: INIT }
-    case 'file-uploaded':
-      return {
-        ...state,
-        isLoading: false,
-        usfmData: action.usfmData,
-        status: UPLOAD_SUCCESS,
-      }
-    case 'invalid-file':
-      return {
-        ...state,
-        isLoading: false,
-        invalidFileType: action.fileType,
-        status: INVALID_FILE,
-      }
-    case 'upload-error':
-      return {
-        ...state,
-        isLoading: false,
-        uploadError: action.error,
-        status: UPLOAD_ERROR,
-      }
-    case 'reload':
-      return { ...initialState }
-    default:
-      return state
-  }
-}
 
 const useZipUsfmFileInput = (
   handleZipLoad = (usfmData, file) => {
@@ -65,7 +18,7 @@ const useZipUsfmFileInput = (
   },
   shouldValidate
 ) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(fileReducer, initialState)
 
   const onSubmit = () => {
     if (state.file) {
