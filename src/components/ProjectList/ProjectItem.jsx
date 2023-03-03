@@ -1,9 +1,9 @@
 import React from 'react'
 
-import useProjectsContext from '../../hooks/useProjectsContext'
+import useProjectsStore from '../../hooks/useProjectsStore'
 
 const ProjectItem = ({ project }) => {
-  const { selectProject } = useProjectsContext()
+  const { selectProject } = useProjectsStore()
 
   return (
     <tr

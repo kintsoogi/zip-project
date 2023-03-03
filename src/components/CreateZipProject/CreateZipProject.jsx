@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import useZipUsfmFileInput from '../../hooks/useZipUsfmFileInput/useZipUsfmFileInput'
-import useProjectsContext from '../../hooks/useProjectsContext'
+import useProjectsStore from '../../hooks/useProjectsStore'
 
 const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
   const [projectName, setProjectName] = useState('')
-  const { addProject } = useProjectsContext()
+  const { addProject } = useProjectsStore()
 
   const handleZipLoad = async (usfmData, file) => {
     await addProject(projectName, usfmData)
