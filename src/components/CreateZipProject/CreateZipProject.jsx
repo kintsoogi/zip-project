@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import useZipUsfmFileInput from '../../hooks/useZipUsfmFileInput/useZipUsfmFileInput'
-import useProjectsContext from '../../hooks/useProjectsContext'
+import useProjectsStore from '../../hooks/useProjectsStore'
 
-const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
+const CreateZipProject = ({ onCreate }) => {
   const [projectName, setProjectName] = useState('')
-  const { addProject } = useProjectsContext()
+  const { addProject } = useProjectsStore()
 
   const handleZipLoad = async (usfmData, file) => {
     await addProject(projectName, usfmData)
@@ -20,7 +20,7 @@ const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
     uploadError,
     onChange,
     onSubmit,
-  } = useZipUsfmFileInput(handleZipLoad, shouldValidate)
+  } = useZipUsfmFileInput(handleZipLoad)
 
   if (isLoading) {
     return <div>Loading....</div>
@@ -74,8 +74,6 @@ const CreateZipProject = ({ onCreate, shouldValidate = true }) => {
 CreateZipProject.propTypes = {
   /** Parameters: usfmData | Called when zip file has loaded to act upon usfm data */
   onCreate: PropTypes.func,
-  /**  Passed to determine whether or not usfm files within the zip should be validated*/
-  shouldValidate: PropTypes.bool,
 }
 
 export default CreateZipProject

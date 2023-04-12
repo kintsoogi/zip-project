@@ -20,7 +20,6 @@ Look in console for uploaded USFM data.
 
 ```jsx
 import React from "react";
-import { ProjectsProvider } from "../../context/projects";
 
 function Component() {
   const handleCreateZip = (usfmData) => {
@@ -30,9 +29,7 @@ function Component() {
   return <CreateZipProject onCreate={handleCreateZip} />;
 }
 
-<ProjectsProvider>
   <Component />
-</ProjectsProvider>;
 ```
 
 ## Example 2: Without Validation
@@ -41,7 +38,6 @@ Without validation turned on, all USFM files (not non-USFM files) are added to t
 
 ```jsx
 import React from "react";
-import { ProjectsProvider } from "../../context/projects";
 
 function Component() {
   const handleCreateZip = (usfmData) => {
@@ -51,7 +47,5 @@ function Component() {
   return <CreateZipProject onCreate={handleCreateZip} shouldValidate={false} />;
 }
 
-<ProjectsProvider>
   <Component />
-</ProjectsProvider>;
 ```

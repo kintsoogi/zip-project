@@ -1,70 +1,27 @@
 import { useEffect, useReducer } from 'react'
 
-import useTransformUsfmZip from '../useTransformUsfmZip/useTransformUsfmZip'
+import { fileBufferToUsfmData } from '../../utils/convertUsfmZip'
+import { fileReducer, initialState } from './FileReducer'
 
 // Constants
 const CANCEL_FILE_OPEN_ERROR =
   "Cannot read properties of undefined (reading 'type')"
 const USFM_NO_BOOKID_ERROR = 'USFM Text Invalid! ~ Did not contain Book ID'
-const FILE_LOADED = 'FILE_LOADED'
-const INIT = 'INIT'
-const INVALID_FILE = 'INVALID_FILE'
-const UPLOAD_ERROR = 'UPLOAD_ERROR'
-const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS'
 
-const initialState = {
-  status: 'idle',
-  file: null,
-  isLoading: false,
-  usfmData: null,
-  invalidFileType: '',
-  uploadError: null,
-}
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'upload':
-      return { ...state, file: action.file, status: FILE_LOADED }
-    case 'submit':
-      return { ...state, isLoading: true, status: INIT }
-    case 'file-uploaded':
-      return {
-        ...state,
-        isLoading: false,
-        usfmData: action.usfmData,
-        status: UPLOAD_SUCCESS,
-      }
-    case 'invalid-file':
-      return {
-        ...state,
-        isLoading: false,
-        invalidFileType: action.fileType,
-        status: INVALID_FILE,
-      }
-    case 'upload-error':
-      return {
-        ...state,
-        isLoading: false,
-        uploadError: action.error,
-        status: UPLOAD_ERROR,
-      }
-    case 'reload':
-      return { ...initialState }
-    default:
-      return state
-  }
-}
-
+/**
+ *
+ * @param {function} handleZipLoad function that takes usfmData and file data. It is called on successful file upload
+ * @param {function} validator function that takes in USFM data and returns only valid USFM data
+ * @returns Object containing file input state and actions to change, submit, and reload
+ */
 const useZipUsfmFileInput = (
   handleZipLoad = (usfmData, file) => {
     console.log(file)
     console.log(usfmData)
   },
-  shouldValidate
+  validator = null
 ) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
-
-  const { fileBufferToUsfmData, validateUsfmData } = useTransformUsfmZip()
+  const [state, dispatch] = useReducer(fileReducer, initialState)
 
   const onSubmit = () => {
     if (state.file) {
@@ -102,8 +59,8 @@ const useZipUsfmFileInput = (
               return
             }
 
-            if (shouldValidate) {
-              const usfmValidatedData = validateUsfmData(usfmData)
+            if (validator) {
+              const usfmValidatedData = validator(usfmData)
               if (!usfmValidatedData.length) {
                 dispatch({
                   type: 'invalid-file',
@@ -144,7 +101,7 @@ const useZipUsfmFileInput = (
       }
     }
     processFile()
-  }, [state.file, state.isLoading, shouldValidate])
+  }, [state.file, state.isLoading, validator])
 
   // Run callback function when usfm data is successfully uploaded
   useEffect(() => {

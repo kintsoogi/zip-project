@@ -7,20 +7,17 @@ _If no data is displaying, upload a zip containing usfm files in [CreateZipProje
 ```jsx
 import React, { useEffect } from 'react'
 
-import { ProjectsProvider } from '../../context/projects'
-import useProjectsContext from '../../hooks/useProjectsContext'
+import useProjectsStore from '../../hooks/useProjectsStore'
 
 function Component() {
-  const { fetchProjects } = useProjectsContext()
+  const { fetchCachedProjects } = useProjectsStore()
 
   useEffect(() => {
-    fetchProjects()
+    fetchCachedProjects()
   }, [])
 
   return <ProjectList />
 }
 
-;<ProjectsProvider>
   <Component />
-</ProjectsProvider>
 ```

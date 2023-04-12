@@ -1,10 +1,10 @@
 import React from 'react'
 
 import ProjectItem from './ProjectItem'
-import useProjectsContext from '../../hooks/useProjectsContext'
+import useProjectsStore from '../../hooks/useProjectsStore'
 
 const ProjectList = () => {
-  const { projects } = useProjectsContext()
+  const { projects } = useProjectsStore()
 
   const renderedProjectItems = projects.map(project => (
     <ProjectItem key={project.name} project={project} />
