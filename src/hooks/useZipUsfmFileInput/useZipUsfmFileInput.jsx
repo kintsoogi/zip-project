@@ -1,9 +1,6 @@
 import { useEffect, useReducer } from 'react'
 
-import {
-  fileBufferToUsfmData,
-  validateUsfmData,
-} from '../../utils/convertUsfmZip'
+import { fileBufferToUsfmData } from '../../utils/convertUsfmZip'
 import { fileReducer, initialState } from './FileReducer'
 
 // Constants
