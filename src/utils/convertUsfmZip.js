@@ -1,20 +1,7 @@
-import grammar from 'usfm-grammar'
 import JSZip from 'jszip'
 
 const USFM_REGEX = /([a-zA-Z0-9\s_\\.\-():])+(.usfm)$/i
 const BOOK_ID_REGEX = /^\\id ([A-Z0-9]{3})/
-
-const isValidUsfmFile = usfmText => {
-  const usfmParser = new grammar.USFMParser(usfmText, grammar.LEVEL.RELAXED)
-  return usfmParser.validate()
-}
-
-export const validateUsfmData = usfmData => {
-  const usfmValidatedData = usfmData.filter(usfmObj =>
-    isValidUsfmFile(usfmObj.usfmText)
-  )
-  return usfmValidatedData
-}
 
 const getUsfmDataFromZip = async zip => {
   const usfmPromises = zip

@@ -4,7 +4,7 @@
   "description": "Library of React Hooks and Components used to open and export zipped usfm files.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kintsoogi/zip-package"
+    "url": "https://github.com/kintsoogi/zip-project"
   },
   "main": "build/index.js",
   "scripts": {
@@ -39,7 +39,6 @@
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "localforage": "^1.10.0",
-    "url": "^0.11.0",
-    "usfm-grammar": "^2.3.0"
+    "url": "^0.11.0"
   }
 }

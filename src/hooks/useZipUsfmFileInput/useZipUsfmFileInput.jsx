@@ -11,12 +11,18 @@ const CANCEL_FILE_OPEN_ERROR =
   "Cannot read properties of undefined (reading 'type')"
 const USFM_NO_BOOKID_ERROR = 'USFM Text Invalid! ~ Did not contain Book ID'
 
+/**
+ *
+ * @param {function} handleZipLoad function that takes usfmData and file data. It is called on successful file upload
+ * @param {function} validator function that takes in USFM data and returns only valid USFM data
+ * @returns Object containing file input state and actions to change, submit, and reload
+ */
 const useZipUsfmFileInput = (
   handleZipLoad = (usfmData, file) => {
     console.log(file)
     console.log(usfmData)
   },
-  shouldValidate
+  validator = null
 ) => {
   const [state, dispatch] = useReducer(fileReducer, initialState)
 
@@ -56,8 +62,8 @@ const useZipUsfmFileInput = (
               return
             }
 
-            if (shouldValidate) {
-              const usfmValidatedData = validateUsfmData(usfmData)
+            if (validator) {
+              const usfmValidatedData = validator(usfmData)
               if (!usfmValidatedData.length) {
                 dispatch({
                   type: 'invalid-file',
@@ -98,7 +104,7 @@ const useZipUsfmFileInput = (
       }
     }
     processFile()
-  }, [state.file, state.isLoading, shouldValidate])
+  }, [state.file, state.isLoading, validator])
 
   // Run callback function when usfm data is successfully uploaded
   useEffect(() => {
