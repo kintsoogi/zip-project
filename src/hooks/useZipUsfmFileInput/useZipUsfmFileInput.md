@@ -23,7 +23,7 @@ function Component() {
     uploadError,
     onChange,
     onSubmit,
-  } = useZipUsfmFileInput(handleZipLoad, true)
+  } = useZipUsfmFileInput(handleZipLoad)
 
   if (isLoading) {
     return <div>Loading....</div>
